@@ -14,6 +14,7 @@
 
         /* Accent */
         --accent: 209 100% 71%;
+        --accent-darker: 209 100% 63%;
 
         --foreground: 224 71.4% 4.1%;
         --card: 0 0% 100%;
