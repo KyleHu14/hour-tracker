@@ -1,6 +1,17 @@
+//  [ Imports ]
+// Supabase
+import supabase from "@/supabase"
+
+// Shadcn
 import { Button } from "@/components/ui/button"
 
 const HomePage = () => {
+    const googleSignIn = () => {
+        supabase.auth.signInWithOAuth({
+            provider: "google",
+        })
+    }
+
     return (
         <main className="flex h-screen w-screen justify-center bg-background px-[10%] md:px-[25%] lg:px-[35%]">
             <div className="bg-background-lighttext-center mt-10 flex h-44 w-full flex-col items-center justify-center gap-2 rounded-md border border-accent text-center sm:gap-4">
@@ -14,9 +25,10 @@ const HomePage = () => {
 
                 <Button
                     size="sm"
-                    className="bg-accent-darker text-md hover:bg-[#2e74b6] md:px-11"
+                    className="text-md bg-accent-darker hover:bg-[#2e74b6] md:px-11"
+                    onClick={googleSignIn}
                 >
-                    Sign In
+                    Sign In With Google
                 </Button>
             </div>
         </main>
