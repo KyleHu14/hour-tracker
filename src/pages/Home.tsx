@@ -5,16 +5,23 @@ import supabase from "@/supabase"
 // Shadcn
 import { Button } from "@/components/ui/button"
 
+// Base Url
+import { BASE_URL } from "@/config"
+
 const HomePage = () => {
     const googleSignIn = () => {
         supabase.auth.signInWithOAuth({
             provider: "google",
+            options: {
+                redirectTo: `${BASE_URL}/dashboard`,
+            },
         })
     }
 
     return (
-        <main className="flex h-screen w-screen justify-center bg-background px-[10%] md:px-[25%] lg:px-[35%]">
-            <div className="bg-background-lighttext-center mt-10 flex h-44 w-full flex-col items-center justify-center gap-2 rounded-md border border-accent text-center sm:gap-4">
+        <main className="flex h-screen w-screen justify-center bg-background px-[10%]">
+            {/* <p>Current User : {session?.user.email || "None"}</p> */}
+            <div className="mt-10 flex h-44 w-96 flex-col items-center justify-center gap-2 rounded-md border border-accent bg-background-light text-center sm:gap-4">
                 <h1 className="text-2xl font-semibold text-accent sm:text-3xl">
                     Hour Tracker
                 </h1>

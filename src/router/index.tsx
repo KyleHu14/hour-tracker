@@ -1,4 +1,9 @@
+// [ Imports ]
+// React Router Dom
 import { createBrowserRouter } from "react-router-dom"
+
+// Pages
+import DashboardPage from "@/pages/Dashboard.tsx"
 import HomePage from "../pages/Home.tsx"
 import Root from "../pages/Root.tsx"
 // import SignInPage from "../pages/auth/SignInPage.tsx"
@@ -18,6 +23,10 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <HomePage />,
+            },
+            {
+                path: "/dashboard",
+                element: <DashboardPage />,
             },
             // {
             // 	path: "/auth/sign-in",
