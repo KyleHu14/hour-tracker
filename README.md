@@ -1,50 +1,32 @@
-# React + TypeScript + Vite
+# Hour Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An application that allows you to track the hours you have spent working. This is an in progress project.
 
-Currently, two official plugins are available:
+# Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Click on the links below to check out an explanation of each component of this app.
 
-## Expanding the ESLint configuration
+1. [📐Project Layout](#project-layout)
+2. [🔒 Authentication](#authentication)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 📐 Project Layout <a name="project-layout"></a>
 
-- Configure the top-level `parserOptions` property like this:
+## 🔒 Authentication <a name="authentication"></a>
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Tools
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Authentication is handled by [Supabase Auth](https://supabase.com/auth).
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Credits
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+The authentication implementation was largely based on this [repository](https://github.com/mmvergara/react-supabase-auth-template). All credit for the authentication organization goes to [mmvergara](https://github.com/mmvergara).
+
+### Description
+
+The components of authentication are found in the [SessionContext.tsx](https://github.com/KyleHu14/hour-tracker/blob/main/src/context/SessionContext.tsx) file.
+
+This file sets up a context that will store the user's session and be accessible to all pages in the project.
+
+The file also creates a hook called `useSession`. This hook is a wrapper for accessing the `SessionContext`.
+
+Lastly we create a component called the `SessionProvider` that sets up the session and isLoading useStates. The useEffect in the `SessionProvider` is used to set up an auth event listener which will update the session accordingly.
