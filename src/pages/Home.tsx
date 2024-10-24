@@ -11,6 +11,9 @@ const HomePage = () => {
         supabase.auth.signInWithOAuth({
             provider: "google",
             options: {
+                queryParams: {
+                    prompt: "select_account",
+                },
                 redirectTo: `${BASE_URL}/dashboard`,
             },
         })
