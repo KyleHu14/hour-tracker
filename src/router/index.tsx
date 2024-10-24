@@ -6,12 +6,8 @@ import { createBrowserRouter } from "react-router-dom"
 import DashboardPage from "@/pages/Dashboard.tsx"
 import HomePage from "../pages/Home.tsx"
 import Root from "../pages/Root.tsx"
-// import SignInPage from "../pages/auth/SignInPage.tsx"
-// import SignUpPage from "../pages/auth/SignUpPage.tsx"
-// import ProtectedPage from "../pages/ProtectedPage.tsx"
-// import NotFoundPage from "../pages/404Page.tsx"
-// import AuthProtectedRoute from "./AuthProtectedRoute.tsx"
-// import Providers from "../Providers.tsx"
+import NotFoundPage from "@/pages/404NotFound.tsx"
+import ProtectedRoute from "./ProtectedRoute.tsx"
 
 const router = createBrowserRouter([
     // I recommend you reflect the routes here in the pages folder
@@ -25,34 +21,22 @@ const router = createBrowserRouter([
                 element: <HomePage />,
             },
             {
-                path: "/dashboard",
-                element: <DashboardPage />,
+                path: "/",
+                element: <ProtectedRoute />,
+                children: [
+                    {
+                        path: "/dashboard",
+                        element: <DashboardPage />,
+                    },
+                ],
             },
-            // {
-            // 	path: "/auth/sign-in",
-            // 	element: <SignInPage />,
-            // },
-            // {
-            // 	path: "/auth/sign-up",
-            // 	element: <SignUpPage />,
-            // },
-            // // Auth Protected routes
-            // {
-            // 	path: "/",
-            // 	element: <AuthProtectedRoute />,
-            // 	children: [
-            // 		{
-            // 			path: "/protected",
-            // 			element: <ProtectedPage />,
-            // 		},
-            // 	],
-            // },
         ],
     },
-    // {
-    // 	path: "*",
-    // 	element: <NotFoundPage />,
-    // },
+
+    {
+        path: "*",
+        element: <NotFoundPage />,
+    },
 ])
 
 export default router
