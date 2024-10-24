@@ -8,6 +8,7 @@ Click on the links below to check out an explanation of each component of this a
 
 1. [📐Project Layout](#project-layout)
 2. [🔒 Authentication](#authentication)
+3. [Credits](#credits)
 
 ## 📐 Project Layout <a name="project-layout"></a>
 
@@ -30,3 +31,8 @@ This file sets up a context that will store the user's session and be accessible
 The file also creates a hook called `useSession`. This hook is a wrapper for accessing the `SessionContext`.
 
 Lastly we create a component called the `SessionProvider` that sets up the session and isLoading useStates. The useEffect in the `SessionProvider` is used to set up an auth event listener which will update the session accordingly.
+
+## Credits <a name="credits"></a>
+
+The icon of this site is sourced from here
+<a href="https://www.flaticon.com/free-icons/clock" title="clock icons">Clock icons created by Kirill Kazachek - Flaticon</a>

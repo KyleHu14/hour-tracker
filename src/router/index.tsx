@@ -10,12 +10,10 @@ import NotFoundPage from "@/pages/404NotFound.tsx"
 import ProtectedRoute from "./ProtectedRoute.tsx"
 
 const router = createBrowserRouter([
-    // I recommend you reflect the routes here in the pages folder
     {
         path: "/",
         element: <Root />,
         children: [
-            // Public routes
             {
                 path: "/",
                 element: <HomePage />,

@@ -27,7 +27,7 @@ const Navbar = ({ userName }: Props) => {
     }
 
     return (
-        <Menubar className="border-b border-b-accent font-semibold">
+        <Menubar className="border-b border-b-accent font-semibold sm:text-xl">
             <MenubarMenu>
                 <MenubarTrigger className="ml-auto text-white">
                     {userName}

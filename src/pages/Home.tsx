@@ -4,15 +4,9 @@ import supabase from "@/supabase"
 
 // Shadcn
 import { Button } from "@/components/ui/button"
-
-// Base Url
 import { BASE_URL } from "@/config"
-import { useSession } from "@/context/SessionContext"
 
 const HomePage = () => {
-    const { session } = useSession()
-    console.log(session)
-
     const googleSignIn = () => {
         supabase.auth.signInWithOAuth({
             provider: "google",
