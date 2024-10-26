@@ -27,17 +27,21 @@ const Navbar = ({ userName }: Props) => {
     }
 
     return (
-        <Menubar className="border-b border-b-accent font-semibold sm:text-xl">
-            <MenubarMenu>
-                <MenubarTrigger className="ml-auto text-white">
-                    {userName}
-                </MenubarTrigger>
-                <MenubarContent className="text-white">
-                    <MenubarItem>Profile</MenubarItem>
-                    <MenubarItem onClick={handleSignOut}>Sign Out</MenubarItem>
-                </MenubarContent>
-            </MenubarMenu>
-        </Menubar>
+        <nav>
+            <Menubar className="border-b border-b-accent font-semibold sm:text-xl">
+                <MenubarMenu>
+                    <MenubarTrigger className="ml-auto text-white">
+                        {userName}
+                    </MenubarTrigger>
+                    <MenubarContent className="text-white">
+                        <MenubarItem>Profile</MenubarItem>
+                        <MenubarItem onClick={handleSignOut}>
+                            Sign Out
+                        </MenubarItem>
+                    </MenubarContent>
+                </MenubarMenu>
+            </Menubar>
+        </nav>
 
         // <nav className="flex justify-between border-b border-b-accent p-5 font-semibold text-white">
         //     <a>Home</a>

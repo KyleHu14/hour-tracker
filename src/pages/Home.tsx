@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { BASE_URL } from "@/config"
 
 const HomePage = () => {
+    // O Auth Signin function
     const googleSignIn = () => {
         supabase.auth.signInWithOAuth({
             provider: "google",

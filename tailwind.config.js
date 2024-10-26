@@ -13,6 +13,7 @@ export default {
                 background: {
                     DEFAULT: "hsl(var(--background))",
                     light: "hsl(var(--background-light))",
+                    secondary: "hsl(var(--background-secondary))",
                 },
                 foreground: "hsl(var(--foreground))",
                 card: {
