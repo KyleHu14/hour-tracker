@@ -4,8 +4,8 @@ import Navbar from "@/components/Navbar"
 
 // Shadcn
 import { Button } from "@/components/ui/button"
-import { Copy } from "lucide-react"
-
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
     Dialog,
     DialogClose,
@@ -16,8 +16,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 
 // Use Session Context
 import { useSession } from "@/context/SessionContext"
@@ -58,7 +56,7 @@ const DashboardPage = () => {
             {/* Navbar */}
             <Navbar userName={session?.user.user_metadata.full_name} />
 
-            <main className="h-screen w-screen bg-background px-4">
+            <main className="h-screen w-screen bg-background px-4 sm:px-20 md:px-32 lg:px-48 xl:px-96">
                 {/* Top Bar with Your Entries and + Button */}
                 <section className="flex items-center justify-between pt-4">
                     <h1 className="text-xl text-white">Your Entries</h1>
@@ -90,10 +88,10 @@ interface EntryContainerProps {
 
 const EntryContainer = ({ data }: EntryContainerProps) => {
     return (
-        <div className="bg-background-secondary rounded-md border border-accent p-2 text-white">
+        <div className="rounded-md border border-accent bg-background-secondary p-2 text-white">
             {/* Row 1 : Name & Hours */}
             <div className="flex justify-between">
-                <h2 className="w-44 overflow-hidden overflow-ellipsis text-nowrap">
+                <h2 className="w-44 overflow-hidden overflow-ellipsis text-nowrap sm:w-52 md:w-64 lg:w-96">
                     {data.name}
                 </h2>
                 <p>{data.hours}</p>
@@ -102,6 +100,13 @@ const EntryContainer = ({ data }: EntryContainerProps) => {
             <div>{`${data.startTime} - ${data.endTime}`}</div>
         </div>
     )
+}
+
+interface LabelInputContainerProps {
+    children: React.ReactNode
+}
+const LabelInputContainer = ({ children }: LabelInputContainerProps) => {
+    return <div className="flex w-full flex-col gap-3">{children}</div>
 }
 
 const CreateButton = () => {
@@ -124,20 +129,10 @@ const CreateButton = () => {
                 </DialogHeader>
 
                 <div className="flex items-center space-x-2">
-                    <div className="grid flex-1 gap-2">
-                        <Label htmlFor="link" className="sr-only">
-                            Link
-                        </Label>
-                        <Input
-                            id="link"
-                            defaultValue="https://ui.shadcn.com/docs/installation"
-                            readOnly
-                        />
-                    </div>
-                    <Button type="submit" size="sm" className="px-3">
-                        <span className="sr-only">Copy</span>
-                        <Copy className="h-4 w-4" />
-                    </Button>
+                    <LabelInputContainer>
+                        <Label>Name</Label>
+                        <Input type="text" placeholder="Name" />
+                    </LabelInputContainer>
                 </div>
 
                 <DialogFooter className="flex flex-row justify-between">
