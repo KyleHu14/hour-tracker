@@ -1,27 +1,11 @@
 // [ Imports ]
 // Components
 import Navbar from "@/components/Navbar"
-
-// Shadcn
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
+import EntryContainer from "@/components/EntryContainer"
+import CreateButton from "@/components/CreateButton"
 
 // Use Session Context
 import { useSession } from "@/context/SessionContext"
-
-// Icons
-import { CirclePlus } from "lucide-react"
 
 const DashboardPage = () => {
     const { session } = useSession()
@@ -73,82 +57,6 @@ const DashboardPage = () => {
                 </section>
             </main>
         </>
-    )
-}
-
-interface EntryContainerProps {
-    data: {
-        name: string
-        startTime: string
-        endTime: string
-        date: string
-        hours: number
-    }
-}
-
-const EntryContainer = ({ data }: EntryContainerProps) => {
-    return (
-        <div className="rounded-md border border-accent bg-background-secondary p-2 text-white">
-            {/* Row 1 : Name & Hours */}
-            <div className="flex justify-between">
-                <h2 className="w-44 overflow-hidden overflow-ellipsis text-nowrap sm:w-52 md:w-64 lg:w-96">
-                    {data.name}
-                </h2>
-                <p>{data.hours}</p>
-            </div>
-            {/* Row 2 : Time Frame */}
-            <div>{`${data.startTime} - ${data.endTime}`}</div>
-        </div>
-    )
-}
-
-interface LabelInputContainerProps {
-    children: React.ReactNode
-}
-const LabelInputContainer = ({ children }: LabelInputContainerProps) => {
-    return <div className="flex w-full flex-col gap-3">{children}</div>
-}
-
-const CreateButton = () => {
-    return (
-        <Dialog>
-            <DialogTrigger asChild>
-                <Button className="bg-transparent">
-                    <CirclePlus className="text-accent" />
-                </Button>
-            </DialogTrigger>
-
-            <DialogContent className="rounded-md border-accent sm:max-w-md">
-                <DialogHeader>
-                    <DialogTitle className="text-white">
-                        Add an Entry
-                    </DialogTitle>
-                    <DialogDescription>
-                        Log your most recent work shift.
-                    </DialogDescription>
-                </DialogHeader>
-
-                <div className="flex items-center space-x-2">
-                    <LabelInputContainer>
-                        <Label>Name</Label>
-                        <Input type="text" placeholder="Name" />
-                    </LabelInputContainer>
-                </div>
-
-                <DialogFooter className="flex flex-row justify-between">
-                    <DialogClose asChild>
-                        <Button type="button" variant="secondary">
-                            Cancel
-                        </Button>
-                    </DialogClose>
-                    <DialogClose asChild>
-                        <Button type="button" variant="secondary">
-                            Create
-                        </Button>
-                    </DialogClose>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
     )
 }
 
