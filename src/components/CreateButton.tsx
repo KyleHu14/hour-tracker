@@ -30,11 +30,12 @@ const CreateButton = () => {
         <Dialog>
             <DialogTrigger asChild>
                 <Button
+                    size="sm"
                     variant="default"
-                    className="border-none bg-accent hover:bg-blue-500"
+                    className="px-2 hover:brightness-90"
                 >
+                    <CirclePlus className="mr-2 h-5 w-5" />
                     Add Entry
-                    <CirclePlus className="ml-2" />
                 </Button>
             </DialogTrigger>
 

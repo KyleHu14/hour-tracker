@@ -36,17 +36,24 @@ const DashboardPage = () => {
     ]
 
     return (
-        <>
+        <div className="h-screen w-full">
             {/* Navbar */}
-            <Navbar userName={session?.user.user_metadata.full_name} />
+            <header>
+                <Navbar userName={session?.user.user_metadata.full_name} />
+            </header>
 
-            <main className="h-screen w-screen bg-background px-4 sm:px-20 md:px-32 lg:px-48 xl:px-96">
-                {/* Top Bar with Your Entries and + Button */}
-                <section className="flex items-center justify-between pt-4">
-                    <h1 className="text-xl text-white">Your Entries</h1>
-
-                    {/* Add New Entry Button */}
-                    <CreateButton />
+            <main className="h-full bg-background px-4 sm:px-20 md:px-32 lg:px-48 xl:px-96">
+                {/* Header Bar */}
+                <section className="flex flex-col gap-2 pt-4">
+                    <h1 className="text-3xl font-bold text-white">
+                        Your Entries
+                    </h1>
+                    <p className="text-xl text-secondary-foreground">
+                        View and organize your logged hours.
+                    </p>
+                    <div>
+                        <CreateButton />
+                    </div>
                 </section>
 
                 {/* List of entries of the user */}
@@ -56,7 +63,7 @@ const DashboardPage = () => {
                     ))}
                 </section>
             </main>
-        </>
+        </div>
     )
 }
 

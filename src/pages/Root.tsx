@@ -1,11 +1,14 @@
+import { ThemeProvider } from "@/components/theme-provider"
 import { SessionProvider } from "@/context/SessionContext"
 import { Outlet } from "react-router-dom"
 
 const Root = () => {
     return (
-        <SessionProvider>
-            <Outlet />
-        </SessionProvider>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+            <SessionProvider>
+                <Outlet />
+            </SessionProvider>
+        </ThemeProvider>
     )
 }
 
