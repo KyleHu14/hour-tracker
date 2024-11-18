@@ -42,7 +42,7 @@ const DashboardPage = () => {
                 <Navbar userName={session?.user.user_metadata.full_name} />
             </header>
 
-            <main className="h-full bg-background px-4 sm:px-20 md:px-32 lg:px-48 xl:px-96">
+            <main className="h-full bg-background px-4 sm:px-20 md:px-[20%] xl:px-[30%]">
                 {/* Header Bar */}
                 <section className="flex flex-col gap-2 pt-4">
                     <h1 className="text-3xl font-bold text-white">

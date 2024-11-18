@@ -24,7 +24,12 @@ import { TimePickerDemo } from "@/components/TimePicker/time-picker-demo"
 import useFormState from "@/hooks/useFormState"
 
 const CreateButton = () => {
-    const { formState, updateField } = useFormState()
+    const { formState, updateField, handleSubmit } = useFormState()
+
+    const onSubmit = (data: typeof formState) => {
+        console.log("Form submitted with data:", data)
+        // Perform further actions, like sending the data to an API
+    }
 
     return (
         <Dialog>
@@ -96,7 +101,11 @@ const CreateButton = () => {
                         </Button>
                     </DialogClose>
                     <DialogClose asChild>
-                        <Button type="button" className="bg-accent">
+                        <Button
+                            type="submit"
+                            className="bg-accent"
+                            onClick={() => handleSubmit(onSubmit)}
+                        >
                             Create
                         </Button>
                     </DialogClose>
