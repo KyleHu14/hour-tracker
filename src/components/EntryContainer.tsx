@@ -7,6 +7,8 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
+import EntryActions from "./EntryActions"
+
 interface EntryContainerProps {
     data: {
         name: string
@@ -29,7 +31,9 @@ const EntryContainer = ({ data }: EntryContainerProps) => {
                 <p>Shift : </p>
                 <p>Money Made : </p>
             </CardContent>
-            <CardFooter></CardFooter>
+            <CardFooter>
+                <EntryActions />
+            </CardFooter>
         </Card>
         // <div className="rounded-md border border-accent bg-background-secondary p-2 text-white">
         //     {/* Row 1 : Name & Hours */}

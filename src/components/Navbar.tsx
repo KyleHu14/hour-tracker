@@ -28,9 +28,9 @@ const Navbar = ({ userName }: Props) => {
 
     return (
         <nav className="w-full">
-            <Menubar className="border-b border-b-primary font-semibold sm:text-xl">
+            <Menubar className="border-b border-b-primary py-8 font-semibold">
                 <MenubarMenu>
-                    <MenubarTrigger className="ml-auto text-white">
+                    <MenubarTrigger className="ml-auto cursor-pointer text-xl text-white">
                         {userName}
                     </MenubarTrigger>
                     <MenubarContent className="text-white">

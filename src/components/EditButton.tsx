@@ -17,13 +17,12 @@ import {
 import { DatePickerDemo } from "./DatePicker"
 
 // Icons
-import { CirclePlus } from "lucide-react"
 import { TimePickerDemo } from "@/components/TimePicker/time-picker-demo"
 
 // Hook for Form States
 import useFormState from "@/hooks/useFormState"
 
-const CreateButton = () => {
+export default function EditButton() {
     const { formState, updateField, handleSubmit } = useFormState()
 
     const onSubmit = (data: typeof formState) => {
@@ -34,14 +33,7 @@ const CreateButton = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button
-                    size="sm"
-                    variant="default"
-                    className="px-2 hover:brightness-90"
-                >
-                    <CirclePlus className="mr-2 h-5 w-5" />
-                    Add Entry
-                </Button>
+                <p className="w-full">Edit</p>
             </DialogTrigger>
 
             <DialogContent className="rounded-md border sm:max-w-md">
@@ -128,5 +120,3 @@ interface LabelTitleProps {
 const LabelTitle = ({ children }: LabelTitleProps) => {
     return <Label className="text-white">{children}</Label>
 }
-
-export default CreateButton

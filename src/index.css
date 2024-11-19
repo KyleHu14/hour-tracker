@@ -64,8 +64,9 @@
         --muted: 0 0% 14.9%;
         --muted-foreground: 215 20% 65%;
 
-        /* --accent: 0 0% 14.9%; */
+        --accent: 0 0% 14.9%;
         --accent-foreground: 0 0% 98%;
+
         --destructive: 0 62.8% 30.6%;
         --destructive-foreground: 0 0% 98%;
         --border: 217 33% 17%;
@@ -84,6 +85,6 @@
         @apply border-border;
     }
     body {
-        /* @apply bg-background text-foreground; */
+        @apply bg-background text-foreground;
     }
 }
