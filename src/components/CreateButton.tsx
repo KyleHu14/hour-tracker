@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dialog"
 
 // Components
-import { DatePickerDemo } from "./DatePicker"
+import { DatePicker } from "./DatePicker"
 
 // Icons
 import { CirclePlus } from "lucide-react"
@@ -28,13 +28,36 @@ import insertWorkLog from "@/supabase/db/work_logs"
 
 // Submit Data Types
 import type { Database } from "@/supabase/types"
+type WorkLogInsert = Database["public"]["Tables"]["work_logs"]["Insert"]
 
 const CreateButton = () => {
-    const { formState, updateField, handleSubmit } = useFormState()
+    const { formState, updateField } = useFormState()
 
-    const onSubmit = async (data: typeof formState) => {
-        console.log("Form submitted with data:", formState)
-        // const insertData = { date: formState.shiftDate?.toISOString() }
+    const submitData = async () => {
+        // Build the data that will be inserted
+        const startTime = new Date(formState.shiftDate as Date)
+        const endTime = new Date(formState.shiftDate as Date)
+
+        startTime.setHours(
+            formState.shiftStart.getHours(),
+            formState.shiftStart.getMinutes(),
+            formState.shiftStart.getSeconds(),
+        )
+
+        endTime.setHours(
+            formState.shiftEnd.getHours(),
+            formState.shiftEnd.getMinutes(),
+            formState.shiftEnd.getSeconds(),
+        )
+
+        const insertData: WorkLogInsert = {
+            hourly_rate: formState.hourlyRate,
+            name: formState.entryName,
+            end_time: endTime.toISOString(),
+            start_time: startTime.toISOString(),
+        }
+
+        const result = await insertWorkLog([insertData])
     }
 
     return (
@@ -78,6 +101,18 @@ const CreateButton = () => {
 
                     {/* Shift Start & End */}
                     <LabelInputContainer>
+                        <LabelTitle>Hourly Rate</LabelTitle>
+                        <Input
+                            type="number"
+                            placeholder="35"
+                            onChange={(e) =>
+                                updateField("hourlyRate", e.target.value)
+                            }
+                        />
+                    </LabelInputContainer>
+
+                    {/* Shift Start & End */}
+                    <LabelInputContainer>
                         <LabelTitle>Shift Start</LabelTitle>
                         <TimePickerDemo
                             setDate={(date) => updateField("shiftStart", date)}
@@ -96,7 +131,12 @@ const CreateButton = () => {
                     {/* Date Picker */}
                     <LabelInputContainer>
                         <LabelTitle>Date of Shift</LabelTitle>
-                        <DatePickerDemo />
+                        <DatePicker
+                            formDate={formState.shiftDate}
+                            setFormDate={(date) =>
+                                updateField("shiftDate", date)
+                            }
+                        />
                     </LabelInputContainer>
                 </div>
 
@@ -109,7 +149,7 @@ const CreateButton = () => {
                     <DialogClose asChild>
                         <Button
                             type="submit"
-                            onClick={() => handleSubmit(onSubmit)}
+                            onClick={async () => await submitData()}
                         >
                             Create
                         </Button>

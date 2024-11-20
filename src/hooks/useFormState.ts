@@ -3,9 +3,9 @@ import { useState } from "react"
 // Define the structure of the form data
 interface FormState {
     entryName: string
-    shiftStart: Date | undefined
-    shiftEnd: Date | undefined
-    shiftDate: Date | undefined
+    shiftStart: Date
+    shiftEnd: Date
+    shiftDate: Date
     hourlyRate: number
 }
 
@@ -36,16 +36,10 @@ const useFormState = () => {
     // Reset form to initial state
     const resetForm = () => setFormState(initialFormState)
 
-    // Optional: Handle form submission (this can be customized as needed)
-    const handleSubmit = (callback: (data: FormState) => void) => {
-        callback(formState)
-    }
-
     return {
         formState,
         updateField,
         resetForm,
-        handleSubmit,
     }
 }
 

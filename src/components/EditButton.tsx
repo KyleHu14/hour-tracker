@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dialog"
 
 // Components
-import { DatePickerDemo } from "./DatePicker"
+import { DatePicker } from "./DatePicker"
 
 // Icons
 import { TimePickerDemo } from "@/components/TimePicker/time-picker-demo"
@@ -23,10 +23,10 @@ import { TimePickerDemo } from "@/components/TimePicker/time-picker-demo"
 import useFormState from "@/hooks/useFormState"
 
 export default function EditButton() {
-    const { formState, updateField, handleSubmit } = useFormState()
+    const { formState, updateField } = useFormState()
 
-    const onSubmit = (data: typeof formState) => {
-        console.log("Form submitted with data:", data)
+    const onSubmit = () => {
+        console.log("Form submitted with data:")
         // Perform further actions, like sending the data to an API
     }
 
@@ -82,7 +82,7 @@ export default function EditButton() {
                     {/* Date Picker */}
                     <LabelInputContainer>
                         <LabelTitle>Date of Shift</LabelTitle>
-                        <DatePickerDemo />
+                        <DatePicker />
                     </LabelInputContainer>
                 </div>
 
@@ -93,10 +93,7 @@ export default function EditButton() {
                         </Button>
                     </DialogClose>
                     <DialogClose asChild>
-                        <Button
-                            type="submit"
-                            onClick={() => handleSubmit(onSubmit)}
-                        >
+                        <Button type="submit" onClick={() => onSubmit}>
                             Create
                         </Button>
                     </DialogClose>
