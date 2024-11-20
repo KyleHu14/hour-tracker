@@ -1,6 +1,6 @@
 //  [ Imports ]
 // Supabase
-import supabase from "@/supabase"
+import supabase from "@/supabase/client"
 
 // Shadcn
 import { Button } from "@/components/ui/button"

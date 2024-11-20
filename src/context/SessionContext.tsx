@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useEffect } from "react"
 
 // Importing Session Type from Supabase
 import { Session } from "@supabase/supabase-js"
-import supabase from "@/supabase"
+import supabase from "@/supabase/client"
 
 // Import loading page
 import LoadingPage from "@/pages/Loading"

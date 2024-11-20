@@ -23,12 +23,18 @@ import { TimePickerDemo } from "@/components/TimePicker/time-picker-demo"
 // Hook for Form States
 import useFormState from "@/hooks/useFormState"
 
+// Submit Data Function
+import insertWorkLog from "@/supabase/db/work_logs"
+
+// Submit Data Types
+import type { Database } from "@/supabase/types"
+
 const CreateButton = () => {
     const { formState, updateField, handleSubmit } = useFormState()
 
-    const onSubmit = (data: typeof formState) => {
-        console.log("Form submitted with data:", data)
-        // Perform further actions, like sending the data to an API
+    const onSubmit = async (data: typeof formState) => {
+        console.log("Form submitted with data:", formState)
+        // const insertData = { date: formState.shiftDate?.toISOString() }
     }
 
     return (

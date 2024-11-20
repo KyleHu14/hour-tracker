@@ -6,16 +6,20 @@ interface FormState {
     shiftStart: Date | undefined
     shiftEnd: Date | undefined
     shiftDate: Date | undefined
+    hourlyRate: number
 }
 
 const useFormState = () => {
+    // Pre Declaring the initial form state
     const initialFormState: FormState = {
         entryName: "",
         shiftStart: new Date(),
         shiftEnd: new Date(),
         shiftDate: new Date(),
+        hourlyRate: 0,
     }
 
+    // useStates
     const [formState, setFormState] = useState<FormState>(initialFormState)
 
     // Update individual fields
