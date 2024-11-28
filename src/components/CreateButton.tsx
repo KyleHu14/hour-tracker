@@ -24,7 +24,7 @@ import { TimePickerDemo } from "@/components/TimePicker/time-picker-demo"
 import useFormState from "@/hooks/useFormState"
 
 // Submit Data Function
-import insertWorkLog from "@/supabase/db/work_logs"
+import { insertWorkLog } from "@/supabase/db/workLogs"
 
 // Submit Data Types
 import type { Database } from "@/supabase/types"
@@ -57,7 +57,7 @@ const CreateButton = () => {
             start_time: startTime.toISOString(),
         }
 
-        const result = await insertWorkLog([insertData])
+        await insertWorkLog([insertData])
     }
 
     return (

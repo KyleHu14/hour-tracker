@@ -4,7 +4,9 @@ import type { Database } from "../types"
 
 type WorkLogInsert = Database["public"]["Tables"]["work_logs"]["Insert"]
 
-export default async function insertWorkLog(insertData: WorkLogInsert[]) {
+const insertWorkLog = async (
+    insertData: WorkLogInsert[],
+): Promise<WorkLogInsert[]> => {
     const { data, error } = await supabase
         .from("work_logs")
         .insert(insertData)
@@ -17,3 +19,16 @@ export default async function insertWorkLog(insertData: WorkLogInsert[]) {
 
     return data
 }
+
+const fetchWorkLogs = async (): Promise<WorkLogInsert[]> => {
+    const { data, error } = await supabase.from("work_logs").select()
+
+    if (error) {
+        console.error("Error inserting work log:", error.message)
+        throw error
+    }
+
+    return data
+}
+
+export { insertWorkLog, fetchWorkLogs }

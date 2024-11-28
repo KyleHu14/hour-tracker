@@ -7,33 +7,21 @@ import CreateButton from "@/components/CreateButton"
 // Use Session Context
 import { useSession } from "@/context/SessionContext"
 
+// React Query
+import { useQuery } from "@tanstack/react-query"
+
+import { fetchWorkLogs } from "@/supabase/db/workLogs"
+
 const DashboardPage = () => {
     const { session } = useSession()
 
-    // Dummy Data, not to be used in the final app
-    const userEntries = [
-        {
-            name: "Select Physical Therapy",
-            startTime: "1PM",
-            endTime: "5PM",
-            date: "10/21/2024",
-            hours: 4,
+    const workLogQuery = useQuery({
+        queryKey: ["workLogs"],
+        queryFn: async () => {
+            const supabaseData = await fetchWorkLogs()
+            return supabaseData
         },
-        {
-            name: "New Sport Physical Therapy",
-            startTime: "2PM",
-            endTime: "6PM",
-            date: "10/22/2024",
-            hours: 4,
-        },
-        {
-            name: "Select Physical Therapy",
-            startTime: "1PM",
-            endTime: "8PM",
-            date: "10/23/2024",
-            hours: 7,
-        },
-    ]
+    })
 
     return (
         <div className="h-screen w-full">
@@ -58,8 +46,8 @@ const DashboardPage = () => {
 
                 {/* List of entries of the user */}
                 <section className="mt-5 flex flex-col gap-3">
-                    {userEntries.map((entry, i) => (
-                        <EntryContainer key={i} data={entry} />
+                    {workLogQuery.data?.map((workLog) => (
+                        <EntryContainer key={workLog.id} data={workLog} />
                     ))}
                 </section>
             </main>
