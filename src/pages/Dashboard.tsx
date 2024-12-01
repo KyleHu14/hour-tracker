@@ -15,7 +15,7 @@ import { fetchWorkLogs } from "@/supabase/db/workLogs"
 const DashboardPage = () => {
     const { session } = useSession()
 
-    const workLogQuery = useQuery({
+    const { isPending, isError, data, error } = useQuery({
         queryKey: ["workLogs"],
         queryFn: async () => {
             const supabaseData = await fetchWorkLogs()
@@ -46,8 +46,8 @@ const DashboardPage = () => {
 
                 {/* List of entries of the user */}
                 <section className="mt-5 flex flex-col gap-3">
-                    {workLogQuery.data?.map((workLog) => (
-                        <EntryContainer key={workLog.id} data={workLog} />
+                    {data?.map((workLog) => (
+                        <EntryContainer key={workLog.id} {...workLog} />
                     ))}
                 </section>
             </main>

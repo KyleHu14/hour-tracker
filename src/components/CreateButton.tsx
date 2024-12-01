@@ -28,12 +28,20 @@ import { insertWorkLog } from "@/supabase/db/workLogs"
 
 // Submit Data Types
 import type { Database } from "@/supabase/types"
+
+// Mutation for Refetching
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+
 type WorkLogInsert = Database["public"]["Tables"]["work_logs"]["Insert"]
 
 const CreateButton = () => {
     const { formState, updateField } = useFormState()
 
+    const queryClient = useQueryClient()
+
     const submitData = async () => {
+        // Get QueryClient from the context
+
         // Build the data that will be inserted
         const startTime = new Date(formState.shiftDate as Date)
         const endTime = new Date(formState.shiftDate as Date)
@@ -57,8 +65,16 @@ const CreateButton = () => {
             start_time: startTime.toISOString(),
         }
 
-        await insertWorkLog([insertData])
+        const returnData = await insertWorkLog([insertData])
+
+        queryClient.invalidateQueries({ queryKey: ["workLogs"] })
+
+        return returnData
     }
+
+    const submitMutation = useMutation({
+        mutationFn: submitData,
+    })
 
     return (
         <Dialog>
@@ -149,7 +165,7 @@ const CreateButton = () => {
                     <DialogClose asChild>
                         <Button
                             type="submit"
-                            onClick={async () => await submitData()}
+                            onClick={() => submitMutation.mutate()}
                         >
                             Create
                         </Button>

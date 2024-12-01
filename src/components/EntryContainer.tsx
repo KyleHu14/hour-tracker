@@ -7,32 +7,41 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
+import { WorkLogFetch } from "@/types"
+
 import EntryActions from "./EntryActions"
 
-interface EntryContainerProps {
-    data: {
-        name: string
-        startTime: string
-        endTime: string
-        date: string
-        hours: number
-    }
-}
+const EntryContainer = ({
+    id,
+    name,
+    startTime,
+    endTime,
+    hourlyRate,
+}: WorkLogFetch) => {
+    const startDate = new Date(startTime)
+    const endDate = new Date(endTime)
 
-const EntryContainer = ({ data }: EntryContainerProps) => {
+    const hours = endDate.getHours() - startDate.getHours()
+
     return (
         <Card>
             <CardHeader>
-                <CardTitle>{data.name}</CardTitle>
-                <CardDescription>{`Date : ${data.date}`}</CardDescription>
+                <CardTitle>{name}</CardTitle>
+                <CardDescription>{`Date : ${startDate.toLocaleString().split(",")[0]}`}</CardDescription>
             </CardHeader>
             <CardContent>
-                <p>Hours Worked : </p>
-                <p>Shift : </p>
-                <p>Money Made : </p>
+                <p>{`Hours Worked : ${hours}`}</p>
+                <p>{`Shift : ${startDate.toLocaleTimeString("en-US", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                })} - ${endDate.toLocaleTimeString("en-US", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                })}`}</p>
+                <p>{`Money Made : ${hours * hourlyRate}$`}</p>
             </CardContent>
             <CardFooter>
-                <EntryActions />
+                <EntryActions id={id} />
             </CardFooter>
         </Card>
         // <div className="rounded-md border border-accent bg-background-secondary p-2 text-white">
