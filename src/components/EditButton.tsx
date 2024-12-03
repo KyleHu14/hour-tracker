@@ -23,12 +23,15 @@ import { TimePickerDemo } from "@/components/TimePicker/time-picker-demo"
 import useFormState from "@/hooks/useFormState"
 
 // Tanstack
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 // DB Functions
-import { editWorkLog, fetchWorkLogById } from "@/supabase/db/workLogs"
+import { editWorkLog } from "@/supabase/db/workLogs"
 import { Database } from "@/supabase/types"
 import { WorkLogFetch } from "@/types"
+
+// React
+import { useEffect } from "react"
 
 type DataType = Database["public"]["Tables"]["work_logs"]["Row"]
 
@@ -75,6 +78,15 @@ export default function EditButton({ data }: Props) {
     const submitMutation = useMutation({
         mutationFn: submitEdit,
     })
+
+    useEffect(() => {
+        updateField("entryName", data.name)
+        updateField("hourlyRate", data.hourlyRate)
+        updateField("shiftDate", new Date(data.startTime))
+        updateField("shiftStart", new Date(data.startTime))
+        updateField("shiftEnd", new Date(data.endTime))
+        console.log("rerender")
+    }, [])
 
     return (
         <Dialog>
