@@ -55,14 +55,13 @@ const fetchWorkLogs = async (): Promise<WorkLogFetch[]> => {
 }
 
 const deleteWorkLog = async (id: number) => {
-    const { error } = await supabase.from("work_logs").delete().eq("id", id)
+    // const { error } = await supabase.from("work_logs").delete().eq("id", id)
+    await supabase.from("work_logs").delete().eq("id", id)
 }
 
 const fetchWorkLogById = async (id: number): Promise<WorkLogFetch[]> => {
-    const { data, error } = await supabase
-        .from("work_logs")
-        .select()
-        .eq("id", id)
+    // const { data, error } = await supabase
+    const { data } = await supabase.from("work_logs").select().eq("id", id)
 
     if (!data) {
         return []

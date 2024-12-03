@@ -16,7 +16,8 @@ interface Props {
 }
 
 const EntryContainer = ({ data }: Props) => {
-    const { startTime, endTime, name, hourlyRate, id } = data
+    // const { startTime, endTime, name, hourlyRate, id } = data
+    const { startTime, endTime, name, hourlyRate } = data
 
     const startDate = new Date(startTime)
     const endDate = new Date(endTime)
