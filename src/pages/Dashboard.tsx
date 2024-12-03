@@ -47,7 +47,7 @@ const DashboardPage = () => {
                 {/* List of entries of the user */}
                 <section className="mt-5 flex flex-col gap-3">
                     {data?.map((workLog) => (
-                        <EntryContainer key={workLog.id} {...workLog} />
+                        <EntryContainer key={workLog.id} data={workLog} />
                     ))}
                 </section>
             </main>

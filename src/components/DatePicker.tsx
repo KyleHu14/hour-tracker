@@ -17,7 +17,7 @@ interface Props {
 
 export function DatePicker({ formDate, setFormDate }: Props) {
     return (
-        <Popover>
+        <Popover modal={true}>
             <PopoverTrigger asChild>
                 <Button
                     variant={"outline"}

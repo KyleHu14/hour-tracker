@@ -40,8 +40,6 @@ const CreateButton = () => {
     const queryClient = useQueryClient()
 
     const submitData = async () => {
-        // Get QueryClient from the context
-
         // Build the data that will be inserted
         const startTime = new Date(formState.shiftDate as Date)
         const endTime = new Date(formState.shiftDate as Date)
@@ -115,19 +113,20 @@ const CreateButton = () => {
                         />
                     </LabelInputContainer>
 
-                    {/* Shift Start & End */}
+                    {/* Hourly Rate */}
                     <LabelInputContainer>
                         <LabelTitle>Hourly Rate</LabelTitle>
                         <Input
                             type="number"
                             placeholder="35"
+                            value={formState.hourlyRate}
                             onChange={(e) =>
                                 updateField("hourlyRate", e.target.value)
                             }
                         />
                     </LabelInputContainer>
 
-                    {/* Shift Start & End */}
+                    {/* Shift Start */}
                     <LabelInputContainer>
                         <LabelTitle>Shift Start</LabelTitle>
                         <TimePickerDemo

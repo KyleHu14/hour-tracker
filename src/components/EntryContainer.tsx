@@ -11,13 +11,13 @@ import { WorkLogFetch } from "@/types"
 
 import EntryActions from "./EntryActions"
 
-const EntryContainer = ({
-    id,
-    name,
-    startTime,
-    endTime,
-    hourlyRate,
-}: WorkLogFetch) => {
+interface Props {
+    data: WorkLogFetch
+}
+
+const EntryContainer = ({ data }: Props) => {
+    const { startTime, endTime, name, hourlyRate, id } = data
+
     const startDate = new Date(startTime)
     const endDate = new Date(endTime)
 
@@ -41,20 +41,9 @@ const EntryContainer = ({
                 <p>{`Money Made : ${hours * hourlyRate}$`}</p>
             </CardContent>
             <CardFooter>
-                <EntryActions id={id} />
+                <EntryActions data={data} />
             </CardFooter>
         </Card>
-        // <div className="rounded-md border border-accent bg-background-secondary p-2 text-white">
-        //     {/* Row 1 : Name & Hours */}
-        //     <div className="flex justify-between">
-        //         <h2 className="w-44 overflow-hidden overflow-ellipsis text-nowrap sm:w-52 md:w-64 lg:w-96">
-        //             {data.name}
-        //         </h2>
-        //         <p>{data.hours} Hours</p>
-        //     </div>
-        //     {/* Row 2 : Time Frame */}
-        //     <div>{`${data.startTime} - ${data.endTime}`}</div>
-        // </div>
     )
 }
 

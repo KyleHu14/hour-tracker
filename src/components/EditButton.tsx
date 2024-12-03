@@ -22,13 +22,59 @@ import { TimePickerDemo } from "@/components/TimePicker/time-picker-demo"
 // Hook for Form States
 import useFormState from "@/hooks/useFormState"
 
-export default function EditButton() {
+// Tanstack
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+
+// DB Functions
+import { editWorkLog, fetchWorkLogById } from "@/supabase/db/workLogs"
+import { Database } from "@/supabase/types"
+import { WorkLogFetch } from "@/types"
+
+type DataType = Database["public"]["Tables"]["work_logs"]["Row"]
+
+interface Props {
+    data: WorkLogFetch
+}
+
+export default function EditButton({ data }: Props) {
     const { formState, updateField } = useFormState()
 
-    const onSubmit = () => {
-        console.log("Form submitted with data:")
-        // Perform further actions, like sending the data to an API
+    const queryClient = useQueryClient()
+
+    const submitEdit = async () => {
+        // Build the data that will be inserted
+        const startTime = new Date(formState.shiftDate as Date)
+        const endTime = new Date(formState.shiftDate as Date)
+
+        startTime.setHours(
+            formState.shiftStart.getHours(),
+            formState.shiftStart.getMinutes(),
+            formState.shiftStart.getSeconds(),
+        )
+
+        endTime.setHours(
+            formState.shiftEnd.getHours(),
+            formState.shiftEnd.getMinutes(),
+            formState.shiftEnd.getSeconds(),
+        )
+
+        const updateData: DataType = {
+            id: data.id,
+            hourly_rate: formState.hourlyRate,
+            name: formState.entryName,
+            end_time: endTime.toISOString(),
+            start_time: startTime.toISOString(),
+            user_id: null,
+        }
+
+        await editWorkLog(updateData)
+
+        queryClient.invalidateQueries({ queryKey: ["workLogs"] })
     }
+
+    const submitMutation = useMutation({
+        mutationFn: submitEdit,
+    })
 
     return (
         <Dialog>
@@ -36,7 +82,12 @@ export default function EditButton() {
                 <p className="w-full">Edit</p>
             </DialogTrigger>
 
-            <DialogContent className="rounded-md border sm:max-w-md">
+            <DialogContent
+                className="rounded-md border sm:max-w-md"
+                onClick={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                onPointerMove={(e) => e.stopPropagation()}
+            >
                 {/* Form Header */}
                 <DialogHeader>
                     <DialogTitle className="text-white">
@@ -62,7 +113,20 @@ export default function EditButton() {
                         />
                     </LabelInputContainer>
 
-                    {/* Shift Start & End */}
+                    {/* Hourly Rate */}
+                    <LabelInputContainer>
+                        <LabelTitle>Hourly Rate</LabelTitle>
+                        <Input
+                            type="number"
+                            placeholder="35"
+                            value={formState.hourlyRate}
+                            onChange={(e) =>
+                                updateField("hourlyRate", e.target.value)
+                            }
+                        />
+                    </LabelInputContainer>
+
+                    {/* Shift Start */}
                     <LabelInputContainer>
                         <LabelTitle>Shift Start</LabelTitle>
                         <TimePickerDemo
@@ -80,9 +144,15 @@ export default function EditButton() {
                     </LabelInputContainer>
 
                     {/* Date Picker */}
+
                     <LabelInputContainer>
                         <LabelTitle>Date of Shift</LabelTitle>
-                        <DatePicker />
+                        <DatePicker
+                            formDate={formState.shiftDate}
+                            setFormDate={(date) =>
+                                updateField("shiftDate", date)
+                            }
+                        />
                     </LabelInputContainer>
                 </div>
 
@@ -93,8 +163,11 @@ export default function EditButton() {
                         </Button>
                     </DialogClose>
                     <DialogClose asChild>
-                        <Button type="submit" onClick={() => onSubmit}>
-                            Create
+                        <Button
+                            type="submit"
+                            onClick={() => submitMutation.mutate()}
+                        >
+                            Confirm
                         </Button>
                     </DialogClose>
                 </DialogFooter>

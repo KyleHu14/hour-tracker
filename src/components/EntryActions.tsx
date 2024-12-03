@@ -15,16 +15,17 @@ import { Ellipsis } from "lucide-react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { deleteWorkLog } from "@/supabase/db/workLogs"
+import { WorkLogFetch } from "@/types"
 
 interface Props {
-    id: number
+    data: WorkLogFetch
 }
 
-export default function EntryActions({ id }: Props) {
+export default function EntryActions({ data }: Props) {
     const queryClient = useQueryClient()
 
     const deleteData = async () => {
-        await deleteWorkLog(id)
+        await deleteWorkLog(data.id)
 
         queryClient.invalidateQueries({ queryKey: ["workLogs"] })
     }
@@ -42,9 +43,11 @@ export default function EntryActions({ id }: Props) {
             <DropdownMenuContent>
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator />
+
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                    <EditButton />
+                    <EditButton data={data} />
                 </DropdownMenuItem>
+
                 <DropdownMenuItem onClick={() => deleteMutation.mutate()}>
                     Delete
                 </DropdownMenuItem>

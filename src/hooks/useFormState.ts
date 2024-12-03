@@ -25,7 +25,7 @@ const useFormState = () => {
     // Update individual fields
     const updateField = (
         field: keyof FormState,
-        value: Date | string | undefined,
+        value: number | Date | string | undefined,
     ) => {
         setFormState((prevState) => ({
             ...prevState,
