@@ -15,7 +15,8 @@ import { fetchWorkLogs } from "@/supabase/db/workLogs"
 const DashboardPage = () => {
     const { session } = useSession()
 
-    const { isPending, isError, data, error } = useQuery({
+    // const { isPending, isError, data, error } = useQuery({
+    const { data } = useQuery({
         queryKey: ["workLogs"],
         queryFn: async () => {
             const supabaseData = await fetchWorkLogs()
