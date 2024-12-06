@@ -32,6 +32,7 @@ import { WorkLogFetch } from "@/types"
 
 // React
 import { useEffect } from "react"
+import { useSession } from "@/context/SessionContext"
 
 type DataType = Database["public"]["Tables"]["work_logs"]["Row"]
 
@@ -40,6 +41,7 @@ interface Props {
 }
 
 export default function EditButton({ data }: Props) {
+    const { session } = useSession()
     const { formState, updateField } = useFormState()
 
     const queryClient = useQueryClient()
@@ -67,7 +69,7 @@ export default function EditButton({ data }: Props) {
             name: formState.entryName,
             end_time: endTime.toISOString(),
             start_time: startTime.toISOString(),
-            user_id: null,
+            user_id: session?.user.id || "",
         }
 
         await editWorkLog(updateData)
@@ -85,7 +87,6 @@ export default function EditButton({ data }: Props) {
         updateField("shiftDate", new Date(data.startTime))
         updateField("shiftStart", new Date(data.startTime))
         updateField("shiftEnd", new Date(data.endTime))
-        console.log("rerender")
     }, [])
 
     return (

@@ -1,8 +1,28 @@
 import { WorkLogFetch } from "@/types"
 import { ColumnDef } from "@tanstack/react-table"
 
+// Components
+import EntryActions from "../EntryActions"
+
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
+
+type monthAbbreviationsType = { [key: number]: string }
+
+const monthAbbreviations: monthAbbreviationsType = {
+    0: "Jan",
+    1: "Feb",
+    2: "Mar",
+    3: "Apr",
+    4: "May",
+    5: "Jun",
+    6: "Jul",
+    7: "Aug",
+    8: "Sep",
+    9: "Oct",
+    10: "Nov",
+    11: "Dec",
+}
 
 export const columns: ColumnDef<WorkLogFetch>[] = [
     {
@@ -41,7 +61,22 @@ export const columns: ColumnDef<WorkLogFetch>[] = [
         },
     },
     {
-        accessorKey: "date",
+        id: "date",
         header: "Date",
+        cell: ({ row }) => {
+            const { startTime } = row.original
+
+            const startDate = new Date(startTime)
+
+            return (
+                <div>{`${monthAbbreviations[startDate.getMonth()]}, ${startDate.getDay() + 1}, ${startDate.getFullYear()}`}</div>
+            )
+        },
+    },
+    {
+        id: "actions",
+        cell: ({ row }) => {
+            return <EntryActions data={row.original} />
+        },
     },
 ]
