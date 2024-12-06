@@ -102,7 +102,7 @@ const CreateButton = () => {
                     </DialogDescription>
                 </DialogHeader>
 
-                <div className="flex flex-col items-center gap-7 space-x-2">
+                <form className="flex flex-col items-center gap-7 space-x-2">
                     {/* Name of Entry */}
                     <LabelInputContainer>
                         <LabelTitle>Entry Name</LabelTitle>
@@ -157,7 +157,7 @@ const CreateButton = () => {
                             }
                         />
                     </LabelInputContainer>
-                </div>
+                </form>
 
                 <DialogFooter className="flex flex-row justify-between">
                     <DialogClose asChild>
