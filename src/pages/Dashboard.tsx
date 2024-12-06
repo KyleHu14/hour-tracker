@@ -10,7 +10,7 @@ import { useSession } from "@/context/SessionContext"
 // React Query
 import { useQuery } from "@tanstack/react-query"
 
-import { fetchWorkLogs } from "@/supabase/db/workLogs"
+import { fetchWorkLogsById } from "@/supabase/db/workLogs"
 
 const DashboardPage = () => {
     const { session } = useSession()
@@ -19,7 +19,7 @@ const DashboardPage = () => {
     const { data } = useQuery({
         queryKey: ["workLogs"],
         queryFn: async () => {
-            const supabaseData = await fetchWorkLogs()
+            const supabaseData = await fetchWorkLogsById(session?.user.id || "")
             return supabaseData
         },
     })

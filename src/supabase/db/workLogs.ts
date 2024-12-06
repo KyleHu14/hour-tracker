@@ -41,8 +41,11 @@ const insertWorkLog = async (
     return data
 }
 
-const fetchWorkLogs = async (): Promise<WorkLogFetch[]> => {
-    const { data, error } = await supabase.from("work_logs").select()
+const fetchWorkLogsById = async (userId: string): Promise<WorkLogFetch[]> => {
+    const { data, error } = await supabase
+        .from("work_logs")
+        .select()
+        .eq("user_id", userId)
 
     if (error) {
         console.error("Error inserting work log:", error.message)
@@ -85,7 +88,7 @@ const editWorkLog = async (updateData: DataType) => {
 
 export {
     insertWorkLog,
-    fetchWorkLogs,
+    fetchWorkLogsById,
     deleteWorkLog,
     fetchWorkLogById,
     editWorkLog,

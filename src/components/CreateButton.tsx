@@ -31,11 +31,14 @@ import type { Database } from "@/supabase/types"
 
 // Mutation for Refetching
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useSession } from "@/context/SessionContext"
 
 type WorkLogInsert = Database["public"]["Tables"]["work_logs"]["Insert"]
 
 const CreateButton = () => {
     const { formState, updateField } = useFormState()
+
+    const { session } = useSession()
 
     const queryClient = useQueryClient()
 
@@ -61,6 +64,7 @@ const CreateButton = () => {
             name: formState.entryName,
             end_time: endTime.toISOString(),
             start_time: startTime.toISOString(),
+            user_id: session?.user.id,
         }
 
         const returnData = await insertWorkLog([insertData])
