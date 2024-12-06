@@ -11,6 +11,10 @@ import { useSession } from "@/context/SessionContext"
 import { useQuery } from "@tanstack/react-query"
 
 import { fetchWorkLogsById } from "@/supabase/db/workLogs"
+import { DataTable } from "@/components/EntryTable/data-table"
+
+// Data Table
+import { columns } from "@/components/EntryTable/columns"
 
 const DashboardPage = () => {
     const { session } = useSession()
@@ -22,6 +26,7 @@ const DashboardPage = () => {
             const supabaseData = await fetchWorkLogsById(session?.user.id || "")
             return supabaseData
         },
+        initialData: [],
     })
 
     return (
@@ -46,10 +51,14 @@ const DashboardPage = () => {
                 </section>
 
                 {/* List of entries of the user */}
-                <section className="mt-5 flex flex-col gap-3">
+                {/* <section className="mt-5 flex flex-col gap-3">
                     {data?.map((workLog) => (
                         <EntryContainer key={workLog.id} data={workLog} />
                     ))}
+                </section> */}
+
+                <section className="mt-5">
+                    <DataTable data={data} columns={columns} />
                 </section>
             </main>
         </div>
