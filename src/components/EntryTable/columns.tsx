@@ -33,7 +33,9 @@ export const columns: ColumnDef<WorkLogFetch>[] = [
     // The amount of money the user made for this shift
     {
         id: "profit",
-        header: "Profit",
+        header: () => {
+            return <div>Profit</div>
+        },
         cell: ({ row }) => {
             const { hourlyRate, startTime, endTime } = row.original
 
@@ -48,7 +50,7 @@ export const columns: ColumnDef<WorkLogFetch>[] = [
     },
     {
         id: "hours",
-        header: "Shift Duration",
+        header: "Duration",
         cell: ({ row }) => {
             const { startTime, endTime } = row.original
 
