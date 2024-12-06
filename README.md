@@ -6,11 +6,11 @@ An application that allows you to track the hours you have spent working. This i
 
 Click on the links below to check out an explanation of each component of this app.
 
-1. [📐Project Layout](#project-layout)
-2. [🔒 Authentication](#authentication)
+1. [💻 Techstack](#tech-stack)
+2. [📖 Documentation](#documentation)
 3. [Credits](#credits)
 
-## 💻 Techstack
+## 💻 Techstack <a name="tech-stack"></a>
 
 -   **Authentication** is handled by [Supabase Auth](https://supabase.com/auth).
 
@@ -24,9 +24,11 @@ Click on the links below to check out an explanation of each component of this a
 
 -   The **Frontend Framework** is React.js using [Vite](https://vite.dev).
 
-## 📖 Documentation
+## 📖 Documentation <a name="documentation"></a>
 
-### 🔒 Authentication <a name="authentication"></a>
+The documentation outlines the implementation details of every step of the project.
+
+### 🔒 Authentication
 
 #### Description
 
@@ -51,6 +53,8 @@ The frontend file structure is below. Components, context, and hooks are fairly 
 5. pages - Contains all pages in the application
 6. router - Contains the router used for routing pages
 7. supabase - Contains all supabase related files such as initializing clients and API functions
+
+####
 
 ### 🗄️ Backend <a name="backend"></a>
 
