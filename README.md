@@ -54,8 +54,6 @@ The frontend file structure is below. Components, context, and hooks are fairly 
 6. router - Contains the router used for routing pages
 7. supabase - Contains all supabase related files such as initializing clients and API functions
 
-####
-
 ### 🗄️ Backend <a name="backend"></a>
 
 #### Description

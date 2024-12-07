@@ -71,7 +71,7 @@ export const columns: ColumnDef<WorkLogFetch>[] = [
             const startDate = new Date(startTime)
 
             return (
-                <div>{`${monthAbbreviations[startDate.getMonth()]}, ${startDate.getDay() + 1}, ${startDate.getFullYear()}`}</div>
+                <div>{`${monthAbbreviations[startDate.getMonth()]}, ${startDate.getDate()}, ${startDate.getFullYear()}`}</div>
             )
         },
     },
