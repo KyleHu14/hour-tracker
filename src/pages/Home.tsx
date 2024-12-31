@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/card"
 
 import { BASE_URL } from "@/config"
+import Form from "@/components/Form"
 
 const HomePage = () => {
     // O Auth Signin function
@@ -50,6 +51,7 @@ const HomePage = () => {
                 </CardContent>
                 <CardFooter>{/* <p>Card Footer</p> */}</CardFooter>
             </Card>
+            <Form />
         </main>
     )
 }

@@ -1,7 +1,6 @@
 import supabase from "@/supabase/client"
 
 import type { Database } from "../types"
-
 import { WorkLogFetch } from "@/types"
 
 type WorkLogInsert = Database["public"]["Tables"]["work_logs"]["Insert"]
