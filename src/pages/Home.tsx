@@ -9,13 +9,11 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
 
 import { BASE_URL } from "@/config"
-import Form from "@/components/Form"
 
 const HomePage = () => {
     // O Auth Signin function
@@ -49,9 +47,7 @@ const HomePage = () => {
                         Sign In With Google
                     </Button>
                 </CardContent>
-                <CardFooter>{/* <p>Card Footer</p> */}</CardFooter>
             </Card>
-            <Form />
         </main>
     )
 }

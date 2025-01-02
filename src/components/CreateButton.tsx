@@ -33,16 +33,35 @@ import type { Database } from "@/supabase/types"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useSession } from "@/context/SessionContext"
 
+// React Hook Forms
+import { SubmitHandler, useForm } from "react-hook-form"
+
 type WorkLogInsert = Database["public"]["Tables"]["work_logs"]["Insert"]
 
+type Inputs = {
+    entryName: string
+    shiftStart: Date
+    shiftEnd: Date
+    shiftDate: Date
+    hourlyRate: number
+}
+
 const CreateButton = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<Inputs>()
+    // console.log(watch("entryName")) // watch input value by passing the name of it
+
     const { formState, updateField } = useFormState()
 
     const { session } = useSession()
 
     const queryClient = useQueryClient()
 
-    const submitData = async () => {
+    const submitData = async (formData: Inputs) => {
+        console.log(formData)
         // Build the data that will be inserted
         const startTime = new Date(formState.shiftDate as Date)
         const endTime = new Date(formState.shiftDate as Date)
@@ -78,6 +97,10 @@ const CreateButton = () => {
         mutationFn: submitData,
     })
 
+    const submitForm: SubmitHandler<Inputs> = (data) => {
+        submitMutation.mutate(data)
+    }
+
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -92,17 +115,20 @@ const CreateButton = () => {
             </DialogTrigger>
 
             <DialogContent className="rounded-md border sm:max-w-md">
-                {/* Form Header */}
-                <DialogHeader>
-                    <DialogTitle className="text-white">
-                        Log your Hours
-                    </DialogTitle>
-                    <DialogDescription>
-                        Log your most recent work shift.
-                    </DialogDescription>
-                </DialogHeader>
+                <form
+                    onSubmit={handleSubmit(submitForm)}
+                    className="flex flex-col gap-7"
+                >
+                    {/* Form Header */}
+                    <DialogHeader>
+                        <DialogTitle className="text-white">
+                            Log your Hours
+                        </DialogTitle>
+                        <DialogDescription>
+                            Log your most recent work shift.
+                        </DialogDescription>
+                    </DialogHeader>
 
-                <form className="flex flex-col items-center gap-7 space-x-2">
                     {/* Name of Entry */}
                     <LabelInputContainer>
                         <LabelTitle>Entry Name</LabelTitle>
@@ -110,10 +136,11 @@ const CreateButton = () => {
                             className="text-white"
                             type="text"
                             placeholder="Entry Name"
-                            value={formState.entryName}
-                            onChange={(e) =>
-                                updateField("entryName", e.target.value)
-                            }
+                            // value={formState.entryName}
+                            // onChange={(e) =>
+                            //     updateField("entryName", e.target.value)
+                            // }
+                            {...register("entryName")}
                         />
                     </LabelInputContainer>
 
@@ -123,10 +150,11 @@ const CreateButton = () => {
                         <Input
                             type="number"
                             placeholder="35"
-                            value={formState.hourlyRate}
-                            onChange={(e) =>
-                                updateField("hourlyRate", e.target.value)
-                            }
+                            // value={formState.hourlyRate}
+                            // onChange={(e) =>
+                            //     updateField("hourlyRate", e.target.value)
+                            // }
+                            {...register("hourlyRate")}
                         />
                     </LabelInputContainer>
 
@@ -157,23 +185,18 @@ const CreateButton = () => {
                             }
                         />
                     </LabelInputContainer>
-                </form>
 
-                <DialogFooter className="flex flex-row justify-between">
-                    <DialogClose asChild>
-                        <Button type="button" variant="destructive">
-                            Cancel
-                        </Button>
-                    </DialogClose>
-                    <DialogClose asChild>
-                        <Button
-                            type="submit"
-                            onClick={() => submitMutation.mutate()}
-                        >
-                            Create
-                        </Button>
-                    </DialogClose>
-                </DialogFooter>
+                    <DialogFooter className="flex flex-row justify-between">
+                        <DialogClose asChild>
+                            <Button type="button" variant="destructive">
+                                Cancel
+                            </Button>
+                        </DialogClose>
+                        <DialogClose asChild>
+                            <Button type="submit">Create</Button>
+                        </DialogClose>
+                    </DialogFooter>
+                </form>
             </DialogContent>
         </Dialog>
     )
