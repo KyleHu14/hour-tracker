@@ -7,7 +7,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import EditButton from "./EditButton"
+import EditButton from "./ModalButtons/EditButton"
 
 import { Ellipsis } from "lucide-react"
 

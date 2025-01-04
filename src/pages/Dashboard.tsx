@@ -1,7 +1,7 @@
 // [ Imports ]
 // Components
 import Navbar from "@/components/Navbar"
-import CreateButton from "@/components/CreateButton"
+import CreateButton from "@/components/ModalButtons/CreateButton"
 
 // Use Session Context
 import { useSession } from "@/context/SessionContext"

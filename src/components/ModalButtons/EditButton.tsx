@@ -14,54 +14,39 @@ import {
 } from "@/components/ui/dialog"
 
 // Components
-import { DatePicker } from "./DatePicker"
+import { DatePicker } from "../DatePicker"
 
 // Icons
-import { CirclePlus } from "lucide-react"
 import { TimePickerDemo } from "@/components/TimePicker/time-picker-demo"
 
 // Hook for Form States
 import useFormState from "@/hooks/useFormState"
 
-// Submit Data Function
-import { insertWorkLog } from "@/supabase/db/workLogs"
-
-// Submit Data Types
-import type { Database } from "@/supabase/types"
-
-// Mutation for Refetching
+// Tanstack
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+
+// DB Functions
+import { editWorkLog } from "@/supabase/db/workLogs"
+import { Database } from "@/supabase/types"
+import { WorkLogFetch } from "@/types"
+
+// React
+import { useEffect } from "react"
 import { useSession } from "@/context/SessionContext"
 
-// React Hook Forms
-import { SubmitHandler, useForm } from "react-hook-form"
+type DataType = Database["public"]["Tables"]["work_logs"]["Row"]
 
-type WorkLogInsert = Database["public"]["Tables"]["work_logs"]["Insert"]
-
-type Inputs = {
-    entryName: string
-    shiftStart: Date
-    shiftEnd: Date
-    shiftDate: Date
-    hourlyRate: number
+interface Props {
+    data: WorkLogFetch
 }
 
-const CreateButton = () => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<Inputs>()
-    // console.log(watch("entryName")) // watch input value by passing the name of it
-
-    const { formState, updateField } = useFormState()
-
+export default function EditButton({ data }: Props) {
     const { session } = useSession()
+    const { formState, updateField } = useFormState()
 
     const queryClient = useQueryClient()
 
-    const submitData = async (formData: Inputs) => {
-        console.log(formData)
+    const submitEdit = async () => {
         // Build the data that will be inserted
         const startTime = new Date(formState.shiftDate as Date)
         const endTime = new Date(formState.shiftDate as Date)
@@ -78,57 +63,55 @@ const CreateButton = () => {
             formState.shiftEnd.getSeconds(),
         )
 
-        const insertData: WorkLogInsert = {
+        const updateData: DataType = {
+            id: data.id,
             hourly_rate: formState.hourlyRate,
             name: formState.entryName,
             end_time: endTime.toISOString(),
             start_time: startTime.toISOString(),
-            user_id: session?.user.id,
+            user_id: session?.user.id || "",
         }
 
-        const returnData = await insertWorkLog([insertData])
+        await editWorkLog(updateData)
 
         queryClient.invalidateQueries({ queryKey: ["workLogs"] })
-
-        return returnData
     }
 
     const submitMutation = useMutation({
-        mutationFn: submitData,
+        mutationFn: submitEdit,
     })
 
-    const submitForm: SubmitHandler<Inputs> = (data) => {
-        submitMutation.mutate(data)
-    }
+    useEffect(() => {
+        updateField("entryName", data.name)
+        updateField("hourlyRate", data.hourlyRate)
+        updateField("shiftDate", new Date(data.startTime))
+        updateField("shiftStart", new Date(data.startTime))
+        updateField("shiftEnd", new Date(data.endTime))
+    }, [])
 
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button
-                    size="sm"
-                    variant="default"
-                    className="px-2 hover:brightness-90"
-                >
-                    <CirclePlus className="mr-2 h-5 w-5" />
-                    Add Entry
-                </Button>
+                <p className="w-full">Edit</p>
             </DialogTrigger>
 
-            <DialogContent className="rounded-md border sm:max-w-md">
-                <form
-                    onSubmit={handleSubmit(submitForm)}
-                    className="flex flex-col gap-7"
-                >
-                    {/* Form Header */}
-                    <DialogHeader>
-                        <DialogTitle className="text-white">
-                            Log your Hours
-                        </DialogTitle>
-                        <DialogDescription>
-                            Log your most recent work shift.
-                        </DialogDescription>
-                    </DialogHeader>
+            <DialogContent
+                className="rounded-md border sm:max-w-md"
+                onClick={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                onPointerMove={(e) => e.stopPropagation()}
+            >
+                {/* Form Header */}
+                <DialogHeader>
+                    <DialogTitle className="text-white">
+                        Log your Hours
+                    </DialogTitle>
+                    <DialogDescription>
+                        Log your most recent work shift.
+                    </DialogDescription>
+                </DialogHeader>
 
+                <div className="flex flex-col items-center gap-7 space-x-2">
                     {/* Name of Entry */}
                     <LabelInputContainer>
                         <LabelTitle>Entry Name</LabelTitle>
@@ -136,11 +119,10 @@ const CreateButton = () => {
                             className="text-white"
                             type="text"
                             placeholder="Entry Name"
-                            // value={formState.entryName}
-                            // onChange={(e) =>
-                            //     updateField("entryName", e.target.value)
-                            // }
-                            {...register("entryName")}
+                            value={formState.entryName}
+                            onChange={(e) =>
+                                updateField("entryName", e.target.value)
+                            }
                         />
                     </LabelInputContainer>
 
@@ -150,11 +132,10 @@ const CreateButton = () => {
                         <Input
                             type="number"
                             placeholder="35"
-                            // value={formState.hourlyRate}
-                            // onChange={(e) =>
-                            //     updateField("hourlyRate", e.target.value)
-                            // }
-                            {...register("hourlyRate")}
+                            value={formState.hourlyRate}
+                            onChange={(e) =>
+                                updateField("hourlyRate", e.target.value)
+                            }
                         />
                     </LabelInputContainer>
 
@@ -176,6 +157,7 @@ const CreateButton = () => {
                     </LabelInputContainer>
 
                     {/* Date Picker */}
+
                     <LabelInputContainer>
                         <LabelTitle>Date of Shift</LabelTitle>
                         <DatePicker
@@ -185,18 +167,23 @@ const CreateButton = () => {
                             }
                         />
                     </LabelInputContainer>
+                </div>
 
-                    <DialogFooter className="flex flex-row justify-between">
-                        <DialogClose asChild>
-                            <Button type="button" variant="destructive">
-                                Cancel
-                            </Button>
-                        </DialogClose>
-                        <DialogClose asChild>
-                            <Button type="submit">Create</Button>
-                        </DialogClose>
-                    </DialogFooter>
-                </form>
+                <DialogFooter className="flex flex-row justify-between">
+                    <DialogClose asChild>
+                        <Button type="button" variant="destructive">
+                            Cancel
+                        </Button>
+                    </DialogClose>
+                    <DialogClose asChild>
+                        <Button
+                            type="submit"
+                            onClick={() => submitMutation.mutate()}
+                        >
+                            Confirm
+                        </Button>
+                    </DialogClose>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     )
@@ -216,5 +203,3 @@ interface LabelTitleProps {
 const LabelTitle = ({ children }: LabelTitleProps) => {
     return <Label className="text-white">{children}</Label>
 }
-
-export default CreateButton
