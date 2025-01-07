@@ -2,6 +2,7 @@
 // Components
 import Navbar from "@/components/Navbar"
 import CreateButton from "@/components/ModalButtons/CreateButton"
+import Insights from "@/components/Insights"
 
 // Use Session Context
 import { useSession } from "@/context/SessionContext"
@@ -49,16 +50,9 @@ const DashboardPage = () => {
                     </div>
                 </section>
 
-                {/* List of entries of the user */}
-                {/* <section className="mt-5 flex flex-col gap-3">
-                    {data?.map((workLog) => (
-                        <EntryContainer key={workLog.id} data={workLog} />
-                    ))}
-                </section> */}
+                <Insights />
 
-                <section className="mt-5">
-                    <DataTable data={data} columns={columns} />
-                </section>
+                <DataTable data={data} columns={columns} />
             </main>
         </div>
     )

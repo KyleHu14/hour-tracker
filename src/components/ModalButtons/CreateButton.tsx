@@ -129,6 +129,7 @@ const CreateButton = () => {
         const returnData = await insertWorkLog([insertData])
 
         queryClient.invalidateQueries({ queryKey: ["workLogs"] })
+        queryClient.invalidateQueries({ queryKey: ["totalHours"] })
         reset()
         setOpen(false)
         return returnData

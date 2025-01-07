@@ -10,7 +10,13 @@ interface TimePickerDemoProps {
 }
 
 export function TimePickerDemo({ date, setDate }: TimePickerDemoProps) {
-    const [period, setPeriod] = React.useState<Period>("PM")
+    const [period, setPeriod] = React.useState<Period>(() => {
+        // Awful idea, but for now this has to be done, need to add a undefined option for am / pm
+        if (!date) return "AM" // Default to AM if no date is provided
+
+        const hours = date.getHours()
+        return hours >= 12 ? "PM" : "AM"
+    })
 
     const minuteRef = React.useRef<HTMLInputElement>(null)
     const hourRef = React.useRef<HTMLInputElement>(null)

@@ -131,6 +131,7 @@ export default function EditButton({ data }: Props) {
         await editWorkLog(updateData)
 
         queryClient.invalidateQueries({ queryKey: ["workLogs"] })
+        queryClient.invalidateQueries({ queryKey: ["totalHours"] })
         reset()
         setOpen(false)
     }

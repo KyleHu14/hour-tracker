@@ -28,6 +28,7 @@ export default function EntryActions({ data }: Props) {
         await deleteWorkLog(data.id)
 
         queryClient.invalidateQueries({ queryKey: ["workLogs"] })
+        queryClient.invalidateQueries({ queryKey: ["totalHours"] })
     }
 
     const deleteMutation = useMutation({

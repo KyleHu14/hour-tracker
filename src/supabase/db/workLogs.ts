@@ -79,8 +79,13 @@ const editWorkLog = async (updateData: DataType) => {
         .eq("id", updateData.id)
         .select()
 
-    console.log(error)
-    console.log(data)
+    return data
+}
+
+const getHoursWorked = async (userId: string) => {
+    const { data, error } = await supabase.rpc("get_total_hours_worked", {
+        input_id: userId,
+    })
 
     return data
 }
@@ -91,4 +96,5 @@ export {
     deleteWorkLog,
     fetchWorkLogById,
     editWorkLog,
+    getHoursWorked,
 }
