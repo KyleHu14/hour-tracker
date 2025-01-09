@@ -20,7 +20,6 @@ export function TimePickerDemo({ date, setDate }: TimePickerDemoProps) {
 
     const minuteRef = React.useRef<HTMLInputElement>(null)
     const hourRef = React.useRef<HTMLInputElement>(null)
-    const secondRef = React.useRef<HTMLInputElement>(null)
     const periodRef = React.useRef<HTMLButtonElement>(null)
 
     return (
@@ -49,23 +48,10 @@ export function TimePickerDemo({ date, setDate }: TimePickerDemoProps) {
                     setDate={setDate}
                     ref={minuteRef}
                     onLeftFocus={() => hourRef.current?.focus()}
-                    onRightFocus={() => secondRef.current?.focus()}
-                />
-            </div>
-            <div className="grid gap-1 text-center">
-                <Label htmlFor="seconds" className="text-xs">
-                    Seconds
-                </Label>
-                <TimePickerInput
-                    picker="seconds"
-                    id="seconds12"
-                    date={date}
-                    setDate={setDate}
-                    ref={secondRef}
-                    onLeftFocus={() => minuteRef.current?.focus()}
                     onRightFocus={() => periodRef.current?.focus()}
                 />
             </div>
+
             <div className="grid gap-1 text-center">
                 <Label htmlFor="period" className="text-xs">
                     Period
@@ -76,7 +62,7 @@ export function TimePickerDemo({ date, setDate }: TimePickerDemoProps) {
                     date={date}
                     setDate={setDate}
                     ref={periodRef}
-                    onLeftFocus={() => secondRef.current?.focus()}
+                    onLeftFocus={() => minuteRef.current?.focus()}
                 />
             </div>
         </div>

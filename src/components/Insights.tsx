@@ -1,15 +1,10 @@
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 import { useSession } from "@/context/SessionContext"
 import { getHoursWorked } from "@/supabase/db/workLogs"
 
 import { useQuery } from "@tanstack/react-query"
+import { Hourglass } from "lucide-react"
 
 const Insights = () => {
     const { session } = useSession()
@@ -25,10 +20,15 @@ const Insights = () => {
     return (
         <section>
             <Card className="w-[350px]">
-                <CardHeader>
-                    <CardTitle>Total Hours</CardTitle>
+                <CardHeader className="flex flex-row justify-between pb-2">
+                    <CardTitle className="text-sm font-medium">
+                        Total Hours Worked
+                    </CardTitle>
+                    <Hourglass className="h-4 w-4" />
                 </CardHeader>
-                <CardContent>{data} Hours</CardContent>
+                <CardContent className="text-2xl font-bold">
+                    {Math.ceil(data || 0)} hrs
+                </CardContent>
             </Card>
         </section>
     )
