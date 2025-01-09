@@ -73,7 +73,7 @@ const fetchWorkLogById = async (id: number): Promise<WorkLogFetch[]> => {
 }
 
 const editWorkLog = async (updateData: DataType) => {
-    const { data, error } = await supabase
+    const { data } = await supabase
         .from("work_logs")
         .update(updateData)
         .eq("id", updateData.id)
@@ -83,7 +83,7 @@ const editWorkLog = async (updateData: DataType) => {
 }
 
 const getHoursWorked = async (userId: string) => {
-    const { data, error } = await supabase.rpc("get_total_hours_worked", {
+    const { data } = await supabase.rpc("get_total_hours_worked", {
         input_id: userId,
     })
 
